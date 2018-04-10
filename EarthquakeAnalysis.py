@@ -81,16 +81,26 @@ def world_map():
 
 
         def get_coordinates(features):
+
+            #This uses lambda(a small anonymous throwaway function) for list comprehensions to
+            #check the depth is a list AND 
+
+            #depth is a list and = equal to 
             depth = lambda L: isinstance(L, list) and max(map(depth, L))+1
+
+            #Defines longitudes and latitudes as lists
             longitudes = []
             latitudes = []
 
+            #this iterates through the json_data['freatures'] for each feature
+            #each feature is json data for a country boundry, this makes lists of longitude and latitude
+            #for each country boundry.  This is standard geo_json layout
             for feature in json_data['features']:
                 coordinates = feature['geometry']['coordinates']
                 number_dimensions = depth(coordinates)
                 # one border
                 if number_dimensions == 3:
-
+                    
                     points = np.array(coordinates[0], 'f')
                     longitudes.append(points[:, 0])
                     latitudes.append(points[:, 1])
@@ -121,10 +131,10 @@ def world_map():
         world_map_plot.background_fill_alpha = 0.55
 
         #This applies the geometic shapes to a lat,long grid
-        world_map_plot.patches(lats, longs, line_color="black", fill_color="#99d8c9", fill_alpha=0.75, line_width=0.5)
+        world_map_plot.patches(lats, longs, line_color="black", fill_color="#99d8c9", fill_alpha=0.75, line_width=None)
 
         #Meteorite landings data mapped over the top of the world patch in red
-        world_map_plot.scatter(earthquake_df['longitude'], earthquake_df['latitude'], fill_color="Tomato", fill_alpha=1, line_width=.5)
+        world_map_plot.scatter(earthquake_df['longitude'], earthquake_df['latitude'], fill_color="#e31a1c", fill_alpha=1, line_width=.5)
 
         #Show the data
         show(world_map_plot)
