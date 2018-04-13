@@ -133,7 +133,7 @@ def world_map():
         #This applies the geometic shapes to a lat,long grid
         world_map_plot.patches(lats, longs, line_color="black", fill_color="#99d8c9", fill_alpha=0.75, line_width=None)
 
-        #Meteorite landings data mapped over the top of the world patch in red
+        #Earthquake data mapped over the top of the world patch in red
         world_map_plot.scatter(earthquake_df['longitude'], earthquake_df['latitude'], fill_color="#e31a1c", fill_alpha=1, line_width=.5)
 
         #Show the data
@@ -147,6 +147,7 @@ def close_sqlite_db():
     sql.close()
 
 
-create_sqlite_table()
-world_map()
-close_sqlite_db()
+if __name__ == '__main__':
+    create_sqlite_table()
+    world_map()
+    close_sqlite_db()
